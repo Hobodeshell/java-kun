@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <style>
+         * {
+             margin: 0;
+             padding: 0;
+         }
+
+         ul {
+             list-style: none;
+         }
+
+         .w {
+             width: 900px;
+             margin: 0 auto;
+         }
+
+         .controls textarea {
+             width: 878px;
+             height: 100px;
+             resize: none;
+             border-radius: 10px;
+             outline: none;
+             padding-left: 20px;
+             padding-top: 10px;
+             font-size: 18px;
+         }
+
+         .controls {
+             overflow: hidden;
+         }
+
+         .controls div {
+             float: right;
+         }
+
+         .controls div span {
+             color: #666;
+         }
+
+         .controls div .useCount {
+             color: red;
+         }
+
+         .controls div button {
+             width: 100px;
+             outline: none;
+             border: none;
+             background: rgb(0, 132, 255);
+             height: 30px;
+             cursor: pointer;
+             color: #fff;
+             font: bold 14px '宋体';
+             transition: all 0.5s;
+         }
+
+         .controls div button:hover {
+             background: rgb(0, 225, 255);
+         }
+
+         .controls div button:disabled {
+             background: rgba(0, 225, 255, 0.5);
+         }
+
+         .contentList {
+             margin-top: 50px;
+         }
+
+         .contentList li {
+             padding: 20px 0;
+             border-bottom: 1px dashed #ccc;
+         }
+
+         .contentList li .info {
+             position: relative;
+         }
+
+         .contentList li .info span {
+             position: absolute;
+             top: 15px;
+             left: 100px;
+             font: bold 16px '宋体';
+         }
+
+         .contentList li .info p {
+             position: absolute;
+             top: 40px;
+             left: 100px;
+             color: #aaa;
+             font-size: 12px;
+         }
+
+         .contentList img {
+             width: 80px;
+             border-radius: 50%;
+         }
+
+         .contentList li .content {
+             padding-left: 100px;
+             color: #666;
+             word-break: break-all;
+         }
+     </style>
+</head>
+<body>
+     <div class="w">
+         <div class="controls">
+             <img src="images/tip.png" alt=""><br>
+             <textarea placeholder="说点什么吧..." id="area" cols="30" rows="10" maxlength="200"></textarea>
+             <div>
+                 <span class="useCount">0</span>
+                 <span>/</span>
+                 <span>200</span>
+                 <button id="send">发布</button>
+             </div>
+
+         </div>
+         <div class="contentList">
+             <ul>
+				<li>
+					<div class="info">
+						<img src="./images/03.jpg"><span>百里守约</span><p>发布于: 2022-3-6 10:14:8</p>
+					</div>
+					<div class="content">
+						aaasdddaadaddadd
+					</div>
+				</li>
+             </ul>
+         </div>
+     </div>
+</body>
+</html>
