@@ -2,7 +2,7 @@
 
 
 
-![image-20230705104753665](E:\500-归档\Java\java框架\Spring\images\image-20230705104753665.png)
+![image-20230705104753665](E:\500-归档\Java\java框架\panda\Spring\images\image-20230705104753665.png)
 
 ## 1.1 简介
 Spring : 春天 --->给软件行业带来了春天
@@ -24,13 +24,11 @@ Spring是一个轻量级的框架 , 非侵入式的 .
 
 ## 1.3 组成
 
-
-
-![image-20230705105241657](E:\500-归档\Java\java框架\Spring\images\image-20230705105241657.png)
+![image-20230705105241657](E:\500-归档\Java\java框架\panda\Spring\images\image-20230705105241657.png)
 
 
 
 Spring 框架是一个分层架构，由 7 个定义良好的模块组成。Spring 模块构建在核心容器之上，核心容器
 定义了创建、配置和管理 bean 的方式 .
 
-![image-20230705105528134](E:\500-归档\Java\java框架\images\image-20230705105528134.png)
+![image-20230705105528134](E:\500-归档\Java\java框架\panda\Spring\images\image-20230705105528134.png)
