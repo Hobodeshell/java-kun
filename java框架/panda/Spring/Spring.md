@@ -16,11 +16,12 @@ GitHub : https://github.com/spring-projects
 
 ## 1.2 优点
 
-Spring是一个开源免费的框架 , 容器 .
-Spring是一个轻量级的框架 , 非侵入式的 .
-**控制反转 IoC , 面向切面 Aop**
-对事物的支持 , 对框架的支持
-一句话概括：Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器（框架）。
+1. Spring是一个开源免费的框架 , 容器 .
+
+2. Spring是一个轻量级的框架 , 非侵入式的 .（就是不会破坏原有的代码）
+3. **控制反转 IoC , 面向切面 Aop**
+4. 对事物的支持 , 对框架的支持
+5. 一句话概括：Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器（框架）。
 
 ## 1.3 组成
 
@@ -39,11 +40,9 @@ Spring 框架是一个分层架构，由 7 个定义良好的模块组成。Spri
 
 **Spring** **上下文**：Spring 上下文是一个配置文件，向 Spring 框架提供上下文信息。Spring 上下文包括企业服务，例如 JNDI、EJB、电子邮件、国际化、校验和调度功能。
 
-**Spring AOP**：通过配置管理特性，Spring AOP 模块直接将面向切面的编程功能 , 集成到了 Spring框架中。所以，可以很容易地使 Spring 框架管理任何支持 AOP的对象。Spring AOP 模块为基于Spring 的应用程序中的对象提供了事务管理服务。通过使用 Spring AOP，不用依赖组件，就可以将声明性事务管理集成到应用程序中。**Spring DAO**：JDBC DAO 抽象层提供了有意义的异常层次结构，可用该结构来管理异常处理和不
+**Spring AOP**：通过配置管理特性，Spring AOP 模块直接将面向切面的编程功能 , 集成到了 Spring框架中。所以，可以很容易地使 Spring 框架管理任何支持 AOP的对象。Spring AOP 模块为基于Spring 的应用程序中的对象提供了事务管理服务。通过使用 Spring AOP，不用依赖组件，就可以将声明性事务管理集成到应用程序中。
 
-同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，并且极大地降低了需要编写的异
-
-常代码数量（例如打开和关闭连接）。Spring DAO 的面向 JDBC 的异常遵从通用的 DAO 异常层次
+**Spring DAO**：JDBC DAO 抽象层提供了有意义的异常层次结构，可用该结构来管理异常处理和不同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，并且极大地降低了需要编写的异常代码数量（例如打开和关闭连接）。Spring DAO 的面向 JDBC 的异常遵从通用的 DAO 异常层次
 
 结构。
 
@@ -61,6 +60,152 @@ Spring 框架是一个分层架构，由 7 个定义良好的模块组成。Spri
 
 **Spring MVC** **框架**：MVC 框架是一个全功能的构建 Web 应用程序的 MVC 实现。通过策略接口，
 
-MVC 框架变成为高度可配置的，MVC 容纳了大量视图技术，其中包括 JSP、Velocity、Tiles、iText
+MVC 框架变成为高度可配置的，MVC 容纳了大量视图技术，其中包括 JSP、Velocity、Tiles、iText和 POI。
 
-和 POI。
+## 1.4 拓展
+
+**Spring Boot与Spring Cloud**
+
+- Spring Boot 是 Spring 的一套快速配置脚手架，可以基于Spring Boot 快速开发单个微服务;
+- Spring Cloud是基于Spring Boot实现的；
+- Spring Boot专注于快速、方便集成的单个微服务个体，Spring Cloud关注全局的服务治理框架；
+- Spring Boot使用了约束优于配置的理念，很多集成方案已经帮你选择好了，能不配置就不配置 ,
+- Spring Cloud很大的一部分是基于Spring Boot来实现，Spring Boot可以离开Spring Cloud独立使用开发项目，但是Spring Cloud离不开Spring Boot，属于依赖的关系。
+
+- SpringBoot在SpringClound中起到了承上启下的作用，如果你要学习SpringCloud必须要学习SpringBoot。
+
+
+
+![image-20230709133528664](E:\500-归档\Java\java框架\panda\Spring\Spring.assets\image-20230709133528664.png)
+
+# **2、IoC基础**
+
+
+
+## **2.1** **分析实现**
+
+我们先用我们原来的方式写一段代码 .
+
+1. 先写一个UserDao接口
+
+   ```java
+   public interface UserDao {
+   	public void getUser();
+   
+   }
+   ```
+
+2. 再去写Dao的实现类
+
+```java
+public class UserDaoImpl implements UserDao {
+@Override
+public void getUser() {
+System.out.println("获取用户数据");
+}
+}
+```
+
+3. 然后去写UserService的接口
+
+```java
+public interface UserService {
+public void getUser();
+}
+```
+
+4. 最后写Service的实现类
+
+   
+
+```java
+public class UserServiceImpl implements UserService {
+	private UserDao userDao = new UserDaoImpl();
+	@Override
+	public void getUser() {
+	userDao.getUser();
+	}
+}
+```
+
+5. 测试一下
+
+```java
+@Test
+public void test(){
+	UserService service = new UserServiceImpl();
+	service.getUser();
+}
+```
+
+这是我们原来的方式 , 开始大家也都是这么去写的对吧 . 那我们现在修改一下 .
+
+把Userdao的实现类增加一个 
+
+```java
+public class UserDaoMySqlImpl implements UserDao {
+	@Override
+	public void getUser() {
+	System.out.println("MySql获取用户数据");
+	}
+}
+```
+
+紧接着我们要去使用MySql的话 , 我们就需要去service实现类里面修改对应的实现 .
+
+```java
+public class UserServiceImpl implements UserService {
+	private UserDao userDao = new UserDaoMySqlImpl();
+	@Override
+	public void getUser() {
+	userDao.getUser();
+	}
+}
+```
+
+在假设, 我们再增加一个Userdao的实现类 
+
+```java
+public class UserDaoOracleImpl implements UserDao {
+	@Override
+	public void getUser() {
+	System.out.println("Oracle获取用户数据");
+	}
+}
+```
+
+那么我们要使用Oracle , 又需要去service实现类里面修改对应的实现 . 假设我们的这种需求非常大 , 这种方式就根本不适用了, 甚至反人类对吧 , 每次变动 , 都需要修改大量代码 . 这种设计的耦合性太高了, 牵一发而动全身 .
+
+**那我们如何去解决呢** **?**
+
+我们可以在需要用到他的地方 , 不去实现它 , 而是留出一个接口 , 利用set , 我们去代码里修改下 .
+
+```java
+public class UserServiceImpl implements UserService {
+	private UserDao userDao;
+	// 利用set实现
+	public void setUserDao(UserDao userDao) {
+	this.userDao = userDao;
+	}
+	@Override
+	public void getUser() {
+	userDao.getUser();
+	}
+}
+```
+
+现在去我们的测试类里 , 进行测试 ;
+
+```java
+@Test
+public void test(){
+	UserServiceImpl service = new UserServiceImpl();
+	service.setUserDao( new UserDaoMySqlImpl() );
+	service.getUser();
+	//那我们现在又想用Oracle去实现呢
+	service.setUserDao( new UserDaoOracleImpl() );
+	service.getUser();
+}
+```
+
+大家发现了区别没有 ? 可能很多人说没啥区别 . 但是同学们 , 他们已经发生了根本性的变化 , 很多地方都不一样了 . 仔细去思考一下 , 以前所有东西都是由程序去进行控制创建 , 而现在是由我们自行控制创建对象 , 把主动权交给了调用者 . 程序不用去管怎么创建,怎么实现了 . 它只负责提供一个接口 .这种思想 , 从本质上解决了问题 , 我们程序员不再去管理对象的创建了 , 更多的去关注业务的实现 . 耦合性大大降低 . 这也就是IOC的原型 !
