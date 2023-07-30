@@ -343,7 +343,7 @@ id=变量名
 
 class=new 对象
 
-property 相当于给兑现中的属性设置一个值。
+property 相当于给对象中的属性设置一个值。
 
 核心用set注入
 
